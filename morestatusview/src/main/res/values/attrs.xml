@@ -7,4 +7,12 @@
         <attr name="msv_emptyView" format="reference"/>
         <attr name="msv_noNetworkView" format="reference"/>
     </declare-styleable>
+
+    <!--<declare-styleable name="FrameStatusView">
+        <attr name="msv_contentView" format="reference"/>
+        <attr name="msv_loadingView" format="reference"/>
+        <attr name="msv_errorView" format="reference"/>
+        <attr name="msv_emptyView" format="reference"/>
+        <attr name="msv_noNetworkView" format="reference"/>
+    </declare-styleable>-->
 </resources>

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 private const val MENU_CONTENT = 100
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             MENU_CONTENT -> Log.e("Tag", "内容视图")
             MENU_LOADING -> Log.e("Tag", "内容视图")
-            MENU_EMPTY -> Log.e("Tag", "内容视图")
+            MENU_EMPTY -> statusView.showEmpty(R.layout.status_view_empty)
             MENU_ERROR -> Log.e("Tag", "内容视图")
             MENU_NO_NETWORK -> Log.e("Tag", "内容视图")
         }
