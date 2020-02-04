@@ -14,6 +14,7 @@ import com.lindroy.morestatusview.R
 import com.lindroy.morestatusview.STATUS_CONTENT
 import com.lindroy.morestatusview.constants.NULL_RESOURCE_ID
 import com.lindroy.morestatusview.constants.STATUS_EMPTY
+import com.lindroy.morestatusview.constants.STATUS_LOADING
 
 /**
  * @author Lin
@@ -26,11 +27,13 @@ class FrameStatusView : FrameLayout {
     private var errorViewId = 0
     private var noNetworkViewId = 0
     private var emptyView: View? = null
+    private var loadingView: View? = null
     private var curViewStatus = STATUS_CONTENT
     private var defaultLayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
     private var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)? = null
     private var statusParams = MoreStatusView.instance
-    private var emptyParams = statusParams.emptyParams
+    private var emptyParams = statusParams.emptyInfo
+    private var loadingParams = statusParams.loadingInfo
 
     constructor(context: Context) : this(context, null)
 
@@ -58,23 +61,51 @@ class FrameStatusView : FrameLayout {
 
     @JvmOverloads
     fun showEmpty(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams) {
-        if (view == null) {
-            if (emptyView == null) {
+        if (emptyView == null){
+            emptyView = if (view == null){
                 checkLayoutId(emptyParams.layoutId)
-                emptyView = inflateView(emptyParams.layoutId)
+                inflateView(emptyParams.layoutId)
+            }else view
+            emptyView!!.tag = STATUS_EMPTY
+            addView(emptyView,0,layoutParams)
+        }else{
+            if (view!= null){
+                removeView(loadingView)
+                emptyView = view
+                emptyView!!.tag = STATUS_EMPTY
+                addView(loadingView,0,layoutParams)
             }
-        } else {
-            emptyView = view
         }
-        changeViewStatus(STATUS_EMPTY)
-        addView(emptyView, 0, layoutParams)
-        emptyView!!.tag = STATUS_EMPTY
         showViewByStatus(STATUS_EMPTY)
     }
 
     @JvmOverloads
     fun showEmpty(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams) =
         showEmpty(inflateView(layoutId), layoutParams)
+
+    @JvmOverloads
+    fun showLoading(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams){
+        if (loadingView == null){
+            loadingView = if (view == null){
+                checkLayoutId(loadingParams.layoutId)
+                inflateView(loadingParams.layoutId)
+            }else view
+            loadingView!!.tag = STATUS_LOADING
+            addView(loadingView,0,layoutParams)
+        }else{
+            if (view!= null){
+                removeView(loadingView)
+                loadingView = view
+                loadingView!!.tag = STATUS_LOADING
+                addView(loadingView,0,layoutParams)
+            }
+        }
+        showViewByStatus(STATUS_LOADING)
+    }
+
+    @JvmOverloads
+    fun showLoading(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams) =
+        showLoading(inflateView(layoutId),layoutParams)
 
     /**
      * 改变当前视图状态
@@ -99,6 +130,7 @@ class FrameStatusView : FrameLayout {
         children.forEach {
             it.visibility = if (it.tag == status) View.VISIBLE else View.GONE
         }
+        changeViewStatus(status)
     }
 
 }

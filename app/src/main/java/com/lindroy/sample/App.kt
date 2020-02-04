@@ -21,6 +21,7 @@ class App:Application() {
     override fun onCreate() {
         super.onCreate()
         MoreStatusView.init()
+            .setLoadingView(R.layout.status_view_loading)
             .setEmptyView(R.layout.status_view_empty)
     }
 }

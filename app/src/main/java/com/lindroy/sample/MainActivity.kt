@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             MENU_CONTENT -> Log.e("Tag", "内容视图")
-            MENU_LOADING -> Log.e("Tag", "内容视图")
+            MENU_LOADING -> statusView.showLoading()
             MENU_EMPTY -> statusView.showEmpty()
             MENU_ERROR -> Log.e("Tag", "内容视图")
             MENU_NO_NETWORK -> Log.e("Tag", "内容视图")
