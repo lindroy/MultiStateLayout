@@ -39,7 +39,7 @@ class FrameStatusView : FrameLayout {
     @SuppressLint("CustomViewStyleable")
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         context.obtainStyledAttributes(attrs, R.styleable.MoreStatusView, defStyleAttr, 0).apply {
-            emptyParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_emptyView, NULL_RESOURCE_ID)
+            emptyParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_emptyView, emptyParams.layoutId)
             loadingViewId = getResourceId(R.styleable.MoreStatusView_msv_loadingView, NULL_RESOURCE_ID)
             errorViewId = getResourceId(R.styleable.MoreStatusView_msv_errorView, NULL_RESOURCE_ID)
             noNetworkViewId = getResourceId(R.styleable.MoreStatusView_msv_noNetworkView, NULL_RESOURCE_ID)
