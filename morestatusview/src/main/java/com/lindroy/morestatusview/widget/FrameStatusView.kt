@@ -12,10 +12,7 @@ import androidx.core.view.children
 import com.lindroy.morestatusview.MoreStatusView
 import com.lindroy.morestatusview.R
 import com.lindroy.morestatusview.STATUS_CONTENT
-import com.lindroy.morestatusview.constants.NULL_RESOURCE_ID
-import com.lindroy.morestatusview.constants.STATUS_EMPTY
-import com.lindroy.morestatusview.constants.STATUS_ERROR
-import com.lindroy.morestatusview.constants.STATUS_LOADING
+import com.lindroy.morestatusview.constants.*
 
 /**
  * @author Lin
@@ -24,10 +21,10 @@ import com.lindroy.morestatusview.constants.STATUS_LOADING
  */
 class FrameStatusView : FrameLayout {
 
-    private var noNetworkViewId = 0
     private var emptyView: View? = null
     private var loadingView: View? = null
-    private var errorView:View? = null
+    private var errorView: View? = null
+    private var noNetworkView: View? = null
     private var curViewStatus = STATUS_CONTENT
     private var defaultLayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
     private var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)? = null
@@ -36,6 +33,7 @@ class FrameStatusView : FrameLayout {
     private var emptyParams = statusParams.emptyInfo
     private var loadingParams = statusParams.loadingInfo
     private var errorParams = statusParams.errorInfo
+    private var noNetworkParams = statusParams.noNetworkInfo
 
     constructor(context: Context) : this(context, null)
 
@@ -46,8 +44,8 @@ class FrameStatusView : FrameLayout {
         context.obtainStyledAttributes(attrs, R.styleable.MoreStatusView, defStyleAttr, 0).apply {
             emptyParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_emptyView, emptyParams.layoutId)
             loadingParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_loadingView, loadingParams.layoutId)
-            errorParams.layoutId =  getResourceId(R.styleable.MoreStatusView_msv_errorView, errorParams.layoutId)
-            noNetworkViewId = getResourceId(R.styleable.MoreStatusView_msv_noNetworkView, NULL_RESOURCE_ID)
+            errorParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_errorView, errorParams.layoutId)
+            noNetworkParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_noNetworkView, noNetworkParams.layoutId)
             recycle()
         }
     }
@@ -110,35 +108,63 @@ class FrameStatusView : FrameLayout {
         showLoading(inflateView(layoutId), layoutParams)
 
     @JvmOverloads
-    fun showError(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,vararg clickViewIds:Int){
-        if (errorView == null){
-            errorView = if (view == null){
+    fun showError(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+                  vararg clickViewIds: Int) {
+        if (errorView == null) {
+            errorView = if (view == null) {
                 checkLayoutId(errorParams.layoutId)
                 inflateView(errorParams.layoutId)
             } else view
             errorView!!.tag = STATUS_ERROR
-            addView(errorView,0,layoutParams)
-        }else{
-           if (view != null) {
-               removeView(errorView)
-               errorView = view
-               errorView!!.tag = STATUS_ERROR
-               addView(errorView,0,layoutParams)
-           }
+            addView(errorView, 0, layoutParams)
+        } else {
+            if (view != null) {
+                removeView(errorView)
+                errorView = view
+                errorView!!.tag = STATUS_ERROR
+                addView(errorView, 0, layoutParams)
+            }
         }
-        setOnRetryViewClickListener(errorView!!,if (clickViewIds.isNotEmpty()) clickViewIds.toList() else errorParams.retryViewIds)
+        setOnRetryViewClickListener(errorView!!, if (clickViewIds.isNotEmpty()) clickViewIds.toList() else errorParams.retryViewIds)
         showViewByStatus(STATUS_ERROR)
     }
 
     @JvmOverloads
     fun showError(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
-                  vararg clickViewIds:Int) =
-        showError(inflateView(layoutId),layoutParams,*clickViewIds)
+                  vararg clickViewIds: Int) =
+        showError(inflateView(layoutId), layoutParams, *clickViewIds)
+
+    @JvmOverloads
+    fun showNoNetwork(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+                      vararg clickViewIds: Int) {
+        if (noNetworkView == null){
+            noNetworkView = if (view == null){
+                checkLayoutId(noNetworkParams.layoutId)
+                inflateView(noNetworkParams.layoutId)
+            } else view
+            noNetworkView!!.tag = STATUS_NO_NETWORK
+            addView(noNetworkView,0,layoutParams)
+        }else{
+            if (view != null){
+                removeView(noNetworkView)
+                noNetworkView = view
+                noNetworkView!!.tag = STATUS_NO_NETWORK
+                addView(noNetworkView,0,layoutParams)
+            }
+        }
+        setOnRetryViewClickListener(noNetworkView!!,if (clickViewIds.isNotEmpty()) clickViewIds.toList() else noNetworkParams.retryViewIds)
+        showViewByStatus(STATUS_NO_NETWORK)
+    }
+
+    @JvmOverloads
+    fun showNoNetwork(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+                      vararg clickViewIds: Int) =
+        showNoNetwork(inflateView(layoutId),layoutParams,*clickViewIds)
 
     /**
      * 设置点击事件
      */
-    fun setOnViewsClickListener(clickListener: (view: View) -> Unit){
+    fun setOnViewsClickListener(clickListener: (view: View) -> Unit) {
         this.clickListener = clickListener
     }
 
@@ -158,8 +184,8 @@ class FrameStatusView : FrameLayout {
 
     private fun setOnRetryViewClickListener(parent: View, retryViewIds: List<Int>) {
         clickListener?.also {
-            retryViewIds.forEach {id->
-                parent.findViewById<View>(id).setOnClickListener {view->
+            retryViewIds.forEach { id ->
+                parent.findViewById<View>(id).setOnClickListener { view ->
                     it.invoke(view)
                 }
             }

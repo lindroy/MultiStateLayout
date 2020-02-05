@@ -21,10 +21,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         statusView.setOnViewsClickListener {
-            when(it.id){
-                R.id.btnRetry->{
-                    Toast.makeText(this,"点击重试",Toast.LENGTH_LONG).show()
-                }
+            when (it.id) {
+                R.id.btnError -> Toast.makeText(this, "点击重试", Toast.LENGTH_LONG).show()
+                R.id.btnNoNetwork -> Toast.makeText(this, "点击重试", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             MENU_LOADING -> statusView.showLoading()
             MENU_EMPTY -> statusView.showEmpty()
             MENU_ERROR -> statusView.showError()
-            MENU_NO_NETWORK -> Log.e("Tag", "内容视图")
+            MENU_NO_NETWORK -> statusView.showNoNetwork()
         }
         return super.onOptionsItemSelected(item)
     }

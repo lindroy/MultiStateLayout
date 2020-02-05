@@ -26,7 +26,7 @@ class MoreStatusView internal constructor() {
         fun init() = MoreStatusView().apply { instance = this }
     }
 
-    internal val statusViewList = arrayListOf<StatusInfo>()
+    private val statusViewList = arrayListOf<StatusInfo>()
 
     internal val emptyInfo: StatusInfo
         get() = getStatusView(STATUS_EMPTY)
@@ -43,14 +43,14 @@ class MoreStatusView internal constructor() {
     fun setLoadingView(@LayoutRes layoutId: Int) =
         addStatusView(STATUS_LOADING, layoutId)
 
+    fun setEmptyView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
+        addStatusView(STATUS_EMPTY, layoutId, *retryViewIds)
+
     fun setErrorView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
         addStatusView(STATUS_ERROR, layoutId, *retryViewIds)
 
     fun setNoNetworkView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
         addStatusView(STATUS_NO_NETWORK, layoutId, *retryViewIds)
-
-    fun setEmptyView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
-        addStatusView(STATUS_EMPTY, layoutId, *retryViewIds)
 
     fun setStatusView(status: Int, @LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
         addStatusView(status, layoutId, *retryViewIds)
