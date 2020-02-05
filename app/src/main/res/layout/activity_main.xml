@@ -17,9 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <EditText
-        android:text="@an"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
 
 </com.lindroy.morestatusview.widget.FrameStatusView>

@@ -23,5 +23,6 @@ class App:Application() {
         MoreStatusView.init()
             .setLoadingView(R.layout.status_view_loading)
             .setEmptyView(R.layout.status_view_empty)
+            .setErrorView(R.layout.status_view_error,R.id.btnRetry)
     }
 }

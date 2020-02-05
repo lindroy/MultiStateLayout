@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,6 +20,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        statusView.setOnViewsClickListener {
+            when(it.id){
+                R.id.btnRetry->{
+                    Toast.makeText(this,"点击重试",Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -35,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             MENU_CONTENT -> Log.e("Tag", "内容视图")
             MENU_LOADING -> statusView.showLoading()
             MENU_EMPTY -> statusView.showEmpty()
-            MENU_ERROR -> Log.e("Tag", "内容视图")
+            MENU_ERROR -> statusView.showError()
             MENU_NO_NETWORK -> Log.e("Tag", "内容视图")
         }
         return super.onOptionsItemSelected(item)

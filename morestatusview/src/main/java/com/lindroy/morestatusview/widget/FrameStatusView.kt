@@ -14,6 +14,7 @@ import com.lindroy.morestatusview.R
 import com.lindroy.morestatusview.STATUS_CONTENT
 import com.lindroy.morestatusview.constants.NULL_RESOURCE_ID
 import com.lindroy.morestatusview.constants.STATUS_EMPTY
+import com.lindroy.morestatusview.constants.STATUS_ERROR
 import com.lindroy.morestatusview.constants.STATUS_LOADING
 
 /**
@@ -23,17 +24,18 @@ import com.lindroy.morestatusview.constants.STATUS_LOADING
  */
 class FrameStatusView : FrameLayout {
 
-    private var loadingViewId = 0
-    private var errorViewId = 0
     private var noNetworkViewId = 0
     private var emptyView: View? = null
     private var loadingView: View? = null
+    private var errorView:View? = null
     private var curViewStatus = STATUS_CONTENT
     private var defaultLayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
     private var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)? = null
+    private var clickListener: ((view: View) -> Unit)? = null
     private var statusParams = MoreStatusView.instance
     private var emptyParams = statusParams.emptyInfo
     private var loadingParams = statusParams.loadingInfo
+    private var errorParams = statusParams.errorInfo
 
     constructor(context: Context) : this(context, null)
 
@@ -43,8 +45,8 @@ class FrameStatusView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         context.obtainStyledAttributes(attrs, R.styleable.MoreStatusView, defStyleAttr, 0).apply {
             emptyParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_emptyView, emptyParams.layoutId)
-            loadingViewId = getResourceId(R.styleable.MoreStatusView_msv_loadingView, NULL_RESOURCE_ID)
-            errorViewId = getResourceId(R.styleable.MoreStatusView_msv_errorView, NULL_RESOURCE_ID)
+            loadingParams.layoutId = getResourceId(R.styleable.MoreStatusView_msv_loadingView, loadingParams.layoutId)
+            errorParams.layoutId =  getResourceId(R.styleable.MoreStatusView_msv_errorView, errorParams.layoutId)
             noNetworkViewId = getResourceId(R.styleable.MoreStatusView_msv_noNetworkView, NULL_RESOURCE_ID)
             recycle()
         }
@@ -55,25 +57,25 @@ class FrameStatusView : FrameLayout {
 
     }
 
-    fun showContent(){
+    fun showContent() {
 
     }
 
     @JvmOverloads
     fun showEmpty(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams) {
-        if (emptyView == null){
-            emptyView = if (view == null){
+        if (emptyView == null) {
+            emptyView = if (view == null) {
                 checkLayoutId(emptyParams.layoutId)
                 inflateView(emptyParams.layoutId)
-            }else view
+            } else view
             emptyView!!.tag = STATUS_EMPTY
-            addView(emptyView,0,layoutParams)
-        }else{
-            if (view!= null){
+            addView(emptyView, 0, layoutParams)
+        } else {
+            if (view != null) {
                 removeView(loadingView)
                 emptyView = view
                 emptyView!!.tag = STATUS_EMPTY
-                addView(loadingView,0,layoutParams)
+                addView(loadingView, 0, layoutParams)
             }
         }
         showViewByStatus(STATUS_EMPTY)
@@ -84,20 +86,20 @@ class FrameStatusView : FrameLayout {
         showEmpty(inflateView(layoutId), layoutParams)
 
     @JvmOverloads
-    fun showLoading(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams){
-        if (loadingView == null){
-            loadingView = if (view == null){
+    fun showLoading(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams) {
+        if (loadingView == null) {
+            loadingView = if (view == null) {
                 checkLayoutId(loadingParams.layoutId)
                 inflateView(loadingParams.layoutId)
-            }else view
+            } else view
             loadingView!!.tag = STATUS_LOADING
-            addView(loadingView,0,layoutParams)
-        }else{
-            if (view!= null){
+            addView(loadingView, 0, layoutParams)
+        } else {
+            if (view != null) {
                 removeView(loadingView)
                 loadingView = view
                 loadingView!!.tag = STATUS_LOADING
-                addView(loadingView,0,layoutParams)
+                addView(loadingView, 0, layoutParams)
             }
         }
         showViewByStatus(STATUS_LOADING)
@@ -105,7 +107,41 @@ class FrameStatusView : FrameLayout {
 
     @JvmOverloads
     fun showLoading(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams) =
-        showLoading(inflateView(layoutId),layoutParams)
+        showLoading(inflateView(layoutId), layoutParams)
+
+    @JvmOverloads
+    fun showError(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,vararg clickViewIds:Int){
+        if (errorView == null){
+            errorView = if (view == null){
+                checkLayoutId(errorParams.layoutId)
+                inflateView(errorParams.layoutId)
+            } else view
+            errorView!!.tag = STATUS_ERROR
+            addView(errorView,0,layoutParams)
+        }else{
+           if (view != null) {
+               removeView(errorView)
+               errorView = view
+               errorView!!.tag = STATUS_ERROR
+               addView(errorView,0,layoutParams)
+           }
+        }
+        setOnRetryViewClickListener(errorView!!,if (clickViewIds.isNotEmpty()) clickViewIds.toList() else errorParams.retryViewIds)
+        showViewByStatus(STATUS_ERROR)
+    }
+
+    @JvmOverloads
+    fun showError(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+                  vararg clickViewIds:Int) =
+        showError(inflateView(layoutId),layoutParams,*clickViewIds)
+
+    /**
+     * 设置点击事件
+     */
+    fun setOnViewsClickListener(clickListener: (view: View) -> Unit){
+        this.clickListener = clickListener
+    }
+
 
     /**
      * 改变当前视图状态
@@ -119,6 +155,16 @@ class FrameStatusView : FrameLayout {
     }
 
     private fun inflateView(layoutId: Int) = LayoutInflater.from(context).inflate(layoutId, null)
+
+    private fun setOnRetryViewClickListener(parent: View, retryViewIds: List<Int>) {
+        clickListener?.also {
+            retryViewIds.forEach {id->
+                parent.findViewById<View>(id).setOnClickListener {view->
+                    it.invoke(view)
+                }
+            }
+        }
+    }
 
     private fun checkLayoutId(@LayoutRes layoutId: Int) {
         if (layoutId == NULL_RESOURCE_ID) {

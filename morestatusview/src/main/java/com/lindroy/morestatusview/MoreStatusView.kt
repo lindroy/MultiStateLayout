@@ -40,8 +40,8 @@ class MoreStatusView internal constructor() {
     internal val noNetworkInfo: StatusInfo
         get() = getStatusView(STATUS_NO_NETWORK)
 
-    fun setLoadingView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
-        addStatusView(STATUS_LOADING, layoutId, *retryViewIds)
+    fun setLoadingView(@LayoutRes layoutId: Int) =
+        addStatusView(STATUS_LOADING, layoutId)
 
     fun setErrorView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
         addStatusView(STATUS_ERROR, layoutId, *retryViewIds)
