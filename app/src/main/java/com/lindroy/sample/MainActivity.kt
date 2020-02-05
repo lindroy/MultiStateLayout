@@ -14,7 +14,7 @@ private const val MENU_LOADING = 200
 private const val MENU_EMPTY = 300
 private const val MENU_ERROR = 400
 private const val MENU_NO_NETWORK = 500
-
+const val TAG = "MoreStatus"
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.btnError -> Toast.makeText(this, "点击重试", Toast.LENGTH_LONG).show()
                 R.id.btnNoNetwork -> Toast.makeText(this, "点击重试", Toast.LENGTH_LONG).show()
             }
+        }
+
+        statusView.setOnViewStatusChangeListener { oldStatus, newStatus ->
+            Log.d(TAG,"oldStatus=$oldStatus,newStatus=$newStatus")
         }
     }
 

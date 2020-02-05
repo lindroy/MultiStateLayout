@@ -162,6 +162,13 @@ class FrameStatusView : FrameLayout {
         showNoNetwork(inflateView(layoutId),layoutParams,*clickViewIds)
 
     /**
+     * 视图改变监听事件
+     */
+    fun setOnViewStatusChangeListener(listener:(oldStatus:Int,newStatus:Int)->Unit){
+        viewStatusListener = listener
+    }
+
+    /**
      * 设置点击事件
      */
     fun setOnViewsClickListener(clickListener: (view: View) -> Unit) {

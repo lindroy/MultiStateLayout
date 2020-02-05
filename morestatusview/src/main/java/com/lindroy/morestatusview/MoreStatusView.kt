@@ -60,10 +60,4 @@ class MoreStatusView internal constructor() {
 
     private fun getStatusView(status: Int) = statusViewList.firstOrNull { it.status == status }
         ?: StatusInfo(status)
-
-    class Builder private constructor() {
-        companion object {
-            fun init() = Builder()
-        }
-    }
 }
