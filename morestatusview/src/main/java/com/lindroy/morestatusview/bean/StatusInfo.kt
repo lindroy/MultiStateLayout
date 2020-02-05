@@ -11,5 +11,5 @@ import com.lindroy.morestatusview.constants.NULL_RESOURCE_ID
 data class StatusInfo(
     val status: Int = -1,
     @LayoutRes var layoutId: Int = NULL_RESOURCE_ID ,
-    val retryViewIds: List<Int> = listOf()
+    val clickViewIds: List<Int> = listOf()
 )

@@ -28,12 +28,13 @@ class FrameStatusView : FrameLayout {
     private var curViewStatus = STATUS_CONTENT
     private var defaultLayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
     private var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)? = null
-    private var clickListener: ((view: View) -> Unit)? = null
+    private var clickListener: ((status: Int, view: View) -> Unit)? = null
     private var statusParams = MoreStatusView.instance
     private var emptyParams = statusParams.emptyInfo
     private var loadingParams = statusParams.loadingInfo
     private var errorParams = statusParams.errorInfo
     private var noNetworkParams = statusParams.noNetworkInfo
+    private val viewTags = listOf<Int>()
 
     constructor(context: Context) : this(context, null)
 
@@ -125,7 +126,8 @@ class FrameStatusView : FrameLayout {
                 addView(errorView, 0, layoutParams)
             }
         }
-        setOnRetryViewClickListener(errorView!!, if (clickViewIds.isNotEmpty()) clickViewIds.toList() else errorParams.retryViewIds)
+        setOnRetryViewClickListener(STATUS_ERROR, errorView!!,
+            if (clickViewIds.isNotEmpty()) clickViewIds.toList() else errorParams.clickViewIds)
         showViewByStatus(STATUS_ERROR)
     }
 
@@ -137,41 +139,55 @@ class FrameStatusView : FrameLayout {
     @JvmOverloads
     fun showNoNetwork(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
                       vararg clickViewIds: Int) {
-        if (noNetworkView == null){
-            noNetworkView = if (view == null){
+        if (noNetworkView == null) {
+            noNetworkView = if (view == null) {
                 checkLayoutId(noNetworkParams.layoutId)
                 inflateView(noNetworkParams.layoutId)
             } else view
             noNetworkView!!.tag = STATUS_NO_NETWORK
-            addView(noNetworkView,0,layoutParams)
-        }else{
-            if (view != null){
+            addView(noNetworkView, 0, layoutParams)
+        } else {
+            if (view != null) {
                 removeView(noNetworkView)
                 noNetworkView = view
                 noNetworkView!!.tag = STATUS_NO_NETWORK
-                addView(noNetworkView,0,layoutParams)
+                addView(noNetworkView, 0, layoutParams)
             }
         }
-        setOnRetryViewClickListener(noNetworkView!!,if (clickViewIds.isNotEmpty()) clickViewIds.toList() else noNetworkParams.retryViewIds)
+        setOnRetryViewClickListener(STATUS_NO_NETWORK, noNetworkView!!,
+            if (clickViewIds.isNotEmpty()) clickViewIds.toList() else noNetworkParams.clickViewIds)
         showViewByStatus(STATUS_NO_NETWORK)
     }
 
     @JvmOverloads
     fun showNoNetwork(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
                       vararg clickViewIds: Int) =
-        showNoNetwork(inflateView(layoutId),layoutParams,*clickViewIds)
+        showNoNetwork(inflateView(layoutId), layoutParams, *clickViewIds)
+
+
+    fun showStatusView(status: Int) {
+        statusParams.getStatusView(status).apply {
+            checkLayoutId(layoutId)
+            if (status !in viewTags) {
+                val statusView = inflateView(layoutId).apply { tag = status }
+                addView(statusView)
+                setOnRetryViewClickListener(status,statusView, clickViewIds)
+            }
+            showViewByStatus(status)
+        }
+    }
 
     /**
      * 视图改变监听事件
      */
-    fun setOnViewStatusChangeListener(listener:(oldStatus:Int,newStatus:Int)->Unit){
+    fun setOnViewStatusChangeListener(listener: (oldStatus: Int, newStatus: Int) -> Unit) {
         viewStatusListener = listener
     }
 
     /**
      * 设置点击事件
      */
-    fun setOnViewsClickListener(clickListener: (view: View) -> Unit) {
+    fun setOnViewsClickListener(clickListener: (status: Int, view: View) -> Unit) {
         this.clickListener = clickListener
     }
 
@@ -189,11 +205,11 @@ class FrameStatusView : FrameLayout {
 
     private fun inflateView(layoutId: Int) = LayoutInflater.from(context).inflate(layoutId, null)
 
-    private fun setOnRetryViewClickListener(parent: View, retryViewIds: List<Int>) {
+    private fun setOnRetryViewClickListener(status: Int, parent: View, retryViewIds: List<Int>) {
         clickListener?.also {
             retryViewIds.forEach { id ->
                 parent.findViewById<View>(id).setOnClickListener { view ->
-                    it.invoke(view)
+                    it.invoke(status, view)
                 }
             }
         }
