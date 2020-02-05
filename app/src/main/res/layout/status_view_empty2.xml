@@ -12,8 +12,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="没有优惠券哦╮(╯▽╰)╭"
-        android:textSize="18sp"
+        android:text="没有数据哦(。・＿・。)"
+        android:textSize="24sp"
        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

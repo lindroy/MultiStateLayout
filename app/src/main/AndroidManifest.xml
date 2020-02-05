@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".FrameStatusActivity2"></activity>
+        <activity
+            android:name=".FrameStatusActivity"
+            android:label="@string/title_global_setting" />
+        <activity
+            android:name=".MainActivity"
+            android:label="基本使用-全局设置">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

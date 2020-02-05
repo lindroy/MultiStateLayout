@@ -34,7 +34,7 @@ class FrameStatusView : FrameLayout {
     private var loadingParams = statusParams.loadingInfo
     private var errorParams = statusParams.errorInfo
     private var noNetworkParams = statusParams.noNetworkInfo
-    private val viewTags = listOf<Int>()
+    private val viewTags = arrayListOf<Int>()
 
     constructor(context: Context) : this(context, null)
 
@@ -53,11 +53,23 @@ class FrameStatusView : FrameLayout {
 
     override fun onFinishInflate() {
         super.onFinishInflate()
+        showContent()
+    }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        if (viewTags.isNotEmpty()){
+            viewTags.clear()
+        }
+        viewStatusListener = null
+        clickListener = null
     }
 
     fun showContent() {
-
+        children.forEach {
+            it.visibility = if (it.tag == STATUS_CONTENT || it.tag !in viewTags) View.VISIBLE else View.GONE
+        }
+        changeViewStatus(STATUS_CONTENT)
     }
 
     @JvmOverloads
@@ -68,6 +80,7 @@ class FrameStatusView : FrameLayout {
                 inflateView(emptyParams.layoutId)
             } else view
             emptyView!!.tag = STATUS_EMPTY
+            viewTags.add(STATUS_EMPTY)
             addView(emptyView, 0, layoutParams)
         } else {
             if (view != null) {
@@ -92,6 +105,7 @@ class FrameStatusView : FrameLayout {
                 inflateView(loadingParams.layoutId)
             } else view
             loadingView!!.tag = STATUS_LOADING
+            viewTags.add(STATUS_LOADING)
             addView(loadingView, 0, layoutParams)
         } else {
             if (view != null) {
@@ -117,6 +131,7 @@ class FrameStatusView : FrameLayout {
                 inflateView(errorParams.layoutId)
             } else view
             errorView!!.tag = STATUS_ERROR
+            viewTags.add(STATUS_ERROR)
             addView(errorView, 0, layoutParams)
         } else {
             if (view != null) {
@@ -126,7 +141,7 @@ class FrameStatusView : FrameLayout {
                 addView(errorView, 0, layoutParams)
             }
         }
-        setOnRetryViewClickListener(STATUS_ERROR, errorView!!,
+        setOnViewClickListener(STATUS_ERROR, errorView!!,
             if (clickViewIds.isNotEmpty()) clickViewIds.toList() else errorParams.clickViewIds)
         showViewByStatus(STATUS_ERROR)
     }
@@ -145,6 +160,7 @@ class FrameStatusView : FrameLayout {
                 inflateView(noNetworkParams.layoutId)
             } else view
             noNetworkView!!.tag = STATUS_NO_NETWORK
+            viewTags.add(STATUS_NO_NETWORK)
             addView(noNetworkView, 0, layoutParams)
         } else {
             if (view != null) {
@@ -154,7 +170,7 @@ class FrameStatusView : FrameLayout {
                 addView(noNetworkView, 0, layoutParams)
             }
         }
-        setOnRetryViewClickListener(STATUS_NO_NETWORK, noNetworkView!!,
+        setOnViewClickListener(STATUS_NO_NETWORK, noNetworkView!!,
             if (clickViewIds.isNotEmpty()) clickViewIds.toList() else noNetworkParams.clickViewIds)
         showViewByStatus(STATUS_NO_NETWORK)
     }
@@ -171,7 +187,8 @@ class FrameStatusView : FrameLayout {
             if (status !in viewTags) {
                 val statusView = inflateView(layoutId).apply { tag = status }
                 addView(statusView)
-                setOnRetryViewClickListener(status,statusView, clickViewIds)
+                viewTags.add(status)
+                setOnViewClickListener(status,statusView, clickViewIds)
             }
             showViewByStatus(status)
         }
@@ -205,7 +222,7 @@ class FrameStatusView : FrameLayout {
 
     private fun inflateView(layoutId: Int) = LayoutInflater.from(context).inflate(layoutId, null)
 
-    private fun setOnRetryViewClickListener(status: Int, parent: View, retryViewIds: List<Int>) {
+    private fun setOnViewClickListener(status: Int, parent: View, retryViewIds: List<Int>) {
         clickListener?.also {
             retryViewIds.forEach { id ->
                 parent.findViewById<View>(id).setOnClickListener { view ->

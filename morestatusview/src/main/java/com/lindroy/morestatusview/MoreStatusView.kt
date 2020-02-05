@@ -26,7 +26,7 @@ class MoreStatusView internal constructor() {
         fun init() = MoreStatusView().apply { instance = this }
     }
 
-    val statusViewList = arrayListOf<StatusInfo>()
+    private val statusViewList = arrayListOf<StatusInfo>()
 
     internal val emptyInfo: StatusInfo
         get() = getStatusView(STATUS_EMPTY)
