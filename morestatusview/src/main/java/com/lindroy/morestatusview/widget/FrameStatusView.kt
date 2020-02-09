@@ -26,14 +26,14 @@ class FrameStatusView : FrameLayout {
     private var errorView: View? = null
     private var noNetworkView: View? = null
     private var curViewStatus = STATUS_CONTENT
-    private var defaultLayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+    private val defaultLayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
     private var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)? = null
     private var clickListener: ((status: Int, view: View) -> Unit)? = null
     private var statusParams = MoreStatusView.instance
-    private var emptyParams = statusParams.emptyInfo
-    private var loadingParams = statusParams.loadingInfo
-    private var errorParams = statusParams.errorInfo
-    private var noNetworkParams = statusParams.noNetworkInfo
+    private val emptyParams = statusParams.emptyInfo
+    private val loadingParams = statusParams.loadingInfo
+    private val errorParams = statusParams.errorInfo
+    private val noNetworkParams = statusParams.noNetworkInfo
     private val viewTags = arrayListOf<Int>()
 
     constructor(context: Context) : this(context, null)

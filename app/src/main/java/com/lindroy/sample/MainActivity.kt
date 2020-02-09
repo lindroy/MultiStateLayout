@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         btnCustomSetting.setOnClickListener {
             startActivity(FrameStatusActivity2::class.java)
         }
+        btnLinear.setOnClickListener {
+            startActivity(LinearStatusActivity::class.java)
+        }
     }
 
     private fun startActivity(cls: Class<*>?){

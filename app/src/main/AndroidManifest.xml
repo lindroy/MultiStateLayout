@@ -12,14 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".FrameStatusActivity2"
-            android:label="@string/title_custom_setting"></activity>
+        <activity
+            android:name=".LinearStatusActivity"
+            android:label="@string/title_activity_linear_status"></activity>
+        <activity
+            android:name=".FrameStatusActivity2"
+            android:label="@string/title_custom_setting" />
         <activity
             android:name=".FrameStatusActivity"
             android:label="@string/title_global_setting" />
-        <activity
-            android:name=".MainActivity"
-           >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
