@@ -47,35 +47,27 @@ class LinearStatusView : LinearLayoutCompat, IStatusView {
 
     override fun showContent() = showContentView()
 
-    @JvmOverloads
-    override fun showLoading(view: View?, layoutParams: ViewGroup.LayoutParams) =
+    override fun showLoading(view: View? , layoutParams: ViewGroup.LayoutParams) =
         showLoadingView(view, layoutParams)
 
-    @JvmOverloads
     override fun showEmpty(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
         showEmptyView(context.inflateView(layoutId),layoutParams)
 
-    @JvmOverloads
     override fun showEmpty(view: View?, layoutParams: ViewGroup.LayoutParams) =
         showEmptyView(view, layoutParams)
 
-    @JvmOverloads
     override fun showError(view: View?, layoutParams: ViewGroup.LayoutParams) =
         showErrorView(view, layoutParams)
 
-    @JvmOverloads
     override fun showError(layoutId: Int, layoutParams: ViewGroup.LayoutParams)=
         showError(context.inflateView(layoutId),layoutParams)
 
-    @JvmOverloads
     override fun showNoNetwork(view: View?, layoutParams: ViewGroup.LayoutParams) =
         showNoNetworkView(view, layoutParams)
 
-    @JvmOverloads
     override fun showNoNetwork(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
         showNoNetworkView(context.inflateView(layoutId), layoutParams)
 
-    @JvmOverloads
     override fun showStatusView(status: Int) =
         showStatusLayout(status)
 
