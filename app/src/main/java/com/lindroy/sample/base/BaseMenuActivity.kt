@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lindroy.sample.R
 import com.lindroy.sample.constants.*
-import kotlinx.android.synthetic.main.activity_sample.*
 
 /**
  * @author Lin
@@ -31,9 +30,9 @@ abstract class BaseMenuActivity : AppCompatActivity() {
     protected val statusViewClickListener: (status: Int, view: View) -> Unit = { status, view ->
         when (view.id) {
             R.id.btnError, R.id.btnNoNetwork -> {
-                statusView.showLoading()
+                showLoading()
                 Handler().postDelayed({
-                    statusView.showContent()
+                    showContent()
                 }, 2000)
             }
             R.id.btnLogin -> Toast.makeText(this, "点击登录", Toast.LENGTH_LONG).show()
@@ -56,12 +55,14 @@ abstract class BaseMenuActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             android.R.id.home -> finish()
         }
         onMenuItemClickListener(item.itemId)
         return super.onOptionsItemSelected(item)
     }
 
-    abstract fun onMenuItemClickListener(id:Int)
+    abstract fun onMenuItemClickListener(id: Int)
+    abstract fun showLoading()
+    abstract fun showContent()
 }

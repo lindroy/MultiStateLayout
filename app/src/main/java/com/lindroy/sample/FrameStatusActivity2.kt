@@ -12,6 +12,14 @@ import kotlinx.android.synthetic.main.activity_sample.*
  * @Description
  */
 class FrameStatusActivity2 : BaseFrameStatusActivity() {
+    override fun showLoading() {
+        statusView.showLoading(R.layout.status_view_loading2)
+    }
+
+    override fun showContent() {
+        statusView.showContent()
+    }
+
     override fun onMenuItemClickListener(id: Int) {
         when (id) {
             MENU_CONTENT -> statusView.showContent()

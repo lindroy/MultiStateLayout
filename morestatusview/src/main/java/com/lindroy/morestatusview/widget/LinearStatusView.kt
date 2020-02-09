@@ -9,6 +9,7 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import com.lindroy.morestatusview.MoreStatusView
 import com.lindroy.morestatusview.R
 import com.lindroy.morestatusview.interfaces.IStatusView
+import com.lindroy.morestatusview.util.inflateView
 
 /**
  * @author Lin
@@ -34,9 +35,7 @@ class LinearStatusView : LinearLayoutCompat, IStatusView {
     constructor(context: Context,
                 attrs: AttributeSet?,
                 defStyleAttr: Int
-    ) : super(
-        context, attrs, defStyleAttr
-    ) {
+    ) : super(context, attrs, defStyleAttr) {
         context.obtainStyledAttributes(attrs, R.styleable.MoreStatusView, defStyleAttr, 0).apply {
             emptyInfo.layoutId = getResourceId(R.styleable.MoreStatusView_msv_emptyView, emptyInfo.layoutId)
             loadingInfo.layoutId = getResourceId(R.styleable.MoreStatusView_msv_loadingView, loadingInfo.layoutId)
@@ -53,8 +52,32 @@ class LinearStatusView : LinearLayoutCompat, IStatusView {
         showLoadingView(view, layoutParams)
 
     @JvmOverloads
+    override fun showEmpty(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
+        showEmptyView(context.inflateView(layoutId),layoutParams)
+
+    @JvmOverloads
     override fun showEmpty(view: View?, layoutParams: ViewGroup.LayoutParams) =
         showEmptyView(view, layoutParams)
+
+    @JvmOverloads
+    override fun showError(view: View?, layoutParams: ViewGroup.LayoutParams) =
+        showErrorView(view, layoutParams)
+
+    @JvmOverloads
+    override fun showError(layoutId: Int, layoutParams: ViewGroup.LayoutParams)=
+        showError(context.inflateView(layoutId),layoutParams)
+
+    @JvmOverloads
+    override fun showNoNetwork(view: View?, layoutParams: ViewGroup.LayoutParams) =
+        showNoNetworkView(view, layoutParams)
+
+    @JvmOverloads
+    override fun showNoNetwork(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
+        showNoNetworkView(context.inflateView(layoutId), layoutParams)
+
+    @JvmOverloads
+    override fun showStatusView(status: Int) =
+        showStatusLayout(status)
 
     override fun onFinishInflate() {
         super.onFinishInflate()
