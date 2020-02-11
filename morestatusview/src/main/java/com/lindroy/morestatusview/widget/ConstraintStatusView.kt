@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.lindroy.morestatusview.R
 import com.lindroy.morestatusview.constants.STATUS_CONTENT
@@ -18,7 +19,7 @@ import com.lindroy.morestatusview.util.inflateView
  */
 class ConstraintStatusView:ConstraintLayout , IStatusView {
 
-    override var curViewStatus: Int = STATUS_CONTENT
+    override var currentStatus: Int = STATUS_CONTENT
     override var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)? = null
     override var clickListener: ((status: Int, view: View) -> Unit)? = null
     override val viewTags: ArrayList<Int> = arrayListOf()
@@ -59,17 +60,17 @@ class ConstraintStatusView:ConstraintLayout , IStatusView {
     override fun showEmpty(view: View?, layoutParams: ViewGroup.LayoutParams) =
         showEmptyView(view, layoutParams)
 
-    override fun showError(view: View?, layoutParams: ViewGroup.LayoutParams) =
-        showErrorView(view, layoutParams)
+    override fun showError(view: View?, layoutParams: ViewGroup.LayoutParams,@IdRes vararg clickViewIds:Int) =
+        showErrorView(view, layoutParams,*clickViewIds)
 
-    override fun showError(layoutId: Int, layoutParams: ViewGroup.LayoutParams)=
-        showError(context.inflateView(layoutId),layoutParams)
+    override fun showError(layoutId: Int, layoutParams: ViewGroup.LayoutParams,@IdRes vararg clickViewIds:Int)=
+        showError(context.inflateView(layoutId),layoutParams,*clickViewIds)
 
-    override fun showNoNetwork(view: View?, layoutParams: ViewGroup.LayoutParams) =
-        showNoNetworkView(view, layoutParams)
+    override fun showNoNetwork(view: View?, layoutParams: ViewGroup.LayoutParams,@IdRes vararg clickViewIds:Int) =
+        showNoNetworkView(view, layoutParams,*clickViewIds)
 
-    override fun showNoNetwork(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
-        showNoNetworkView(context.inflateView(layoutId), layoutParams)
+    override fun showNoNetwork(layoutId: Int, layoutParams: ViewGroup.LayoutParams,@IdRes vararg clickViewIds:Int) =
+        showNoNetworkView(context.inflateView(layoutId), layoutParams,*clickViewIds)
 
     override fun showStatusView(status: Int) =
         showStatusLayout(status)

@@ -11,3 +11,4 @@ import android.view.View
  */
 internal fun Context.inflateView(layoutId: Int): View =
     LayoutInflater.from(this).inflate(layoutId, null)
+

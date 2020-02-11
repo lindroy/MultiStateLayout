@@ -25,7 +25,7 @@ class FrameStatusActivity2 : BaseFrameStatusActivity() {
             MENU_CONTENT -> statusView.showContent()
             MENU_LOADING -> statusView.showLoading(R.layout.status_view_loading2)
             MENU_EMPTY -> statusView.showEmpty(R.layout.status_view_empty2)
-            MENU_ERROR -> statusView.showError()
+            MENU_ERROR -> statusView.showError(R.layout.status_view_error2,R.id.btnError)
             MENU_NO_NETWORK -> statusView.showNoNetwork()
             MENU_NEED_LOGIN -> statusView.showStatusView(STATUS_NEED_LOGIN)
             MENU_NO_COUPON -> statusView.showStatusView(STATUS_NO_COUPON)

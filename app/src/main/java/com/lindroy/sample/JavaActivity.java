@@ -2,10 +2,10 @@ package com.lindroy.sample;
 
 import android.os.Bundle;
 
-import com.lindroy.morestatusview.widget.LinearStatusView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.lindroy.morestatusview.widget.FrameStatusView;
 
 /**
  * @author Lin
@@ -17,7 +17,7 @@ public class JavaActivity extends AppCompatActivity {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_linear_status);
-        LinearStatusView linearStatusView = findViewById(R.id.linearStatusView);
+        setContentView(R.layout.activity_sample);
+        FrameStatusView statusView = findViewById(R.id.statusView);
     }
 }

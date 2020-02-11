@@ -43,20 +43,20 @@ class MoreStatusView internal constructor() {
     fun setLoadingView(@LayoutRes layoutId: Int) =
         addStatusView(STATUS_LOADING, layoutId)
 
-    fun setEmptyView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
-        addStatusView(STATUS_EMPTY, layoutId, *retryViewIds)
+    fun setEmptyView(@LayoutRes layoutId: Int, @IdRes vararg clickViewIds: Int) =
+        addStatusView(STATUS_EMPTY, layoutId, *clickViewIds)
 
-    fun setErrorView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
-        addStatusView(STATUS_ERROR, layoutId, *retryViewIds)
+    fun setErrorView(@LayoutRes layoutId: Int, @IdRes vararg clickViewIds: Int) =
+        addStatusView(STATUS_ERROR, layoutId, *clickViewIds)
 
-    fun setNoNetworkView(@LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
-        addStatusView(STATUS_NO_NETWORK, layoutId, *retryViewIds)
+    fun setNoNetworkView(@LayoutRes layoutId: Int, @IdRes vararg clickViewIds: Int) =
+        addStatusView(STATUS_NO_NETWORK, layoutId, *clickViewIds)
 
-    fun setStatusView(status: Int, @LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
-        addStatusView(status, layoutId, *retryViewIds)
+    fun setStatusView(status: Int, @LayoutRes layoutId: Int, @IdRes vararg clickViewIds: Int) =
+        addStatusView(status, layoutId, *clickViewIds)
 
-    private fun addStatusView(status: Int, @LayoutRes layoutId: Int, @IdRes vararg retryViewIds: Int) =
-        this.apply { statusViewList.add(StatusInfo(status, layoutId, retryViewIds.toList())) }
+    private fun addStatusView(status: Int, @LayoutRes layoutId: Int, @IdRes vararg clickViewIds: Int) =
+        this.apply { statusViewList.add(StatusInfo(status, layoutId, clickViewIds.toList())) }
 
     internal fun getStatusView(status: Int) = statusViewList.firstOrNull { it.status == status }
         ?: StatusInfo(status)

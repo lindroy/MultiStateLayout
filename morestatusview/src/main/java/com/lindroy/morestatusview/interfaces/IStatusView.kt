@@ -3,6 +3,7 @@ package com.lindroy.morestatusview.interfaces
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.children
 import com.lindroy.morestatusview.MoreStatusView
@@ -21,12 +22,12 @@ internal interface IStatusView {
     var loadingView: View?
     var errorView: View?
     var noNetworkView: View?
-    var curViewStatus: Int
+    var currentStatus: Int
     var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)?
     var clickListener: ((status: Int, view: View) -> Unit)?
     val viewTags: ArrayList<Int>
-    val defaultLayoutParams
-        get() = FrameLayout.LayoutParams(
+    private val defaultLayoutParams
+        get() = ViewGroup.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
         )
 
@@ -52,6 +53,7 @@ internal interface IStatusView {
      * 显示加载中视图
      */
     fun showLoading(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+
     /**
      * 显示加载中视图
      */
@@ -70,22 +72,52 @@ internal interface IStatusView {
     /**
      * 显示错误视图
      */
-    fun showError(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showError(
+        view: View? = null,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes vararg clickViewIds: Int
+    )
 
     /**
      * 显示错误视图
      */
-    fun showError(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showError(
+        @LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes vararg clickViewIds: Int
+    )
+
+    /**
+     * @see showError
+     */
+    fun showError(
+        @LayoutRes layoutId: Int,
+        @IdRes vararg clickViewIds: Int
+    ) = showError(layoutId,defaultLayoutParams,*clickViewIds)
 
     /**
      * 显示断网视图
      */
-    fun showNoNetwork(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showNoNetwork(
+        view: View? = null,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        vararg clickViewIds: Int
+    )
 
     /**
      * 显示断网视图
      */
-    fun showNoNetwork(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showNoNetwork(
+        @LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        vararg clickViewIds: Int
+    )
+
+    /**
+     * @see showNoNetwork
+     */
+    fun showNoNetwork(
+        @LayoutRes layoutId: Int,
+        vararg clickViewIds: Int
+    )= showNoNetwork(layoutId,defaultLayoutParams,*clickViewIds)
 
     /**
      * 显示状态视图
@@ -107,7 +139,7 @@ internal interface IStatusView {
     }
     //endregion
 
-    fun ViewGroup.showLoadingView(view: View? , layoutParams: ViewGroup.LayoutParams) {
+    fun ViewGroup.showLoadingView(view: View?, layoutParams: ViewGroup.LayoutParams) {
         if (loadingView == null) {
             loadingView = if (view == null) {
                 checkLayoutId(loadingInfo.layoutId)
@@ -128,8 +160,9 @@ internal interface IStatusView {
     }
 
 
-    fun ViewGroup.showEmptyView(view: View? = null,
-                                layoutParams: ViewGroup.LayoutParams = defaultLayoutParams
+    fun ViewGroup.showEmptyView(
+        view: View? = null,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams
     ) {
         if (emptyView == null) {
             emptyView = if (view == null) {
@@ -152,13 +185,16 @@ internal interface IStatusView {
 
     fun ViewGroup.showContentView() {
         children.forEach {
-            it.visibility = if (it.tag == STATUS_CONTENT || it.tag !in viewTags) View.VISIBLE else View.GONE
+            it.visibility =
+                if (it.tag == STATUS_CONTENT || it.tag !in viewTags) View.VISIBLE else View.GONE
         }
         changeViewStatus(STATUS_CONTENT)
     }
 
-    fun ViewGroup.showErrorView(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
-                                vararg clickViewIds: Int) {
+    fun ViewGroup.showErrorView(
+        view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        vararg clickViewIds: Int
+    ) {
         if (errorView == null) {
             errorView = if (view == null) {
                 checkLayoutId(errorInfo.layoutId)
@@ -175,13 +211,17 @@ internal interface IStatusView {
                 addView(errorView, 0, layoutParams)
             }
         }
-        setOnViewClickListener(STATUS_ERROR, errorView!!,
-            if (clickViewIds.isNotEmpty()) clickViewIds.toList() else errorInfo.clickViewIds)
+        errorView!!.setOnChildViewClickListener(
+            STATUS_ERROR,
+            if (view == null) errorInfo.clickViewIds else clickViewIds.toList()
+        )
         showViewByStatus(STATUS_ERROR)
     }
 
-    fun ViewGroup.showNoNetworkView(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
-                                    vararg clickViewIds: Int) {
+    fun ViewGroup.showNoNetworkView(
+        view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        vararg clickViewIds: Int
+    ) {
         if (noNetworkView == null) {
             noNetworkView = if (view == null) {
                 checkLayoutId(noNetworkInfo.layoutId)
@@ -198,8 +238,10 @@ internal interface IStatusView {
                 addView(noNetworkView, 0, layoutParams)
             }
         }
-        setOnViewClickListener(STATUS_NO_NETWORK, noNetworkView!!,
-            if (clickViewIds.isNotEmpty()) clickViewIds.toList() else noNetworkInfo.clickViewIds)
+        noNetworkView!!.setOnChildViewClickListener(
+            STATUS_NO_NETWORK,
+            if (view == null) noNetworkInfo.clickViewIds else clickViewIds.toList()
+        )
         showViewByStatus(STATUS_NO_NETWORK)
     }
 
@@ -221,18 +263,21 @@ internal interface IStatusView {
             checkLayoutId(layoutId)
             if (status !in viewTags) {
                 val statusView = context.inflateView(layoutId).apply { tag = status }
-                addView(statusView,0,defaultLayoutParams)
+                addView(statusView, 0, defaultLayoutParams)
                 viewTags.add(status)
-                setOnViewClickListener(status, statusView, clickViewIds)
+                statusView.setOnChildViewClickListener(status, clickViewIds)
             }
             showViewByStatus(status)
         }
     }
 
-    private fun setOnViewClickListener(status: Int, parent: View, retryViewIds: List<Int>) {
+    private fun View.setOnChildViewClickListener(status: Int, childViewIds: List<Int>) {
         clickListener?.also {
-            retryViewIds.forEach { id ->
-                parent.findViewById<View>(id).setOnClickListener { view ->
+            if (childViewIds.isEmpty()) {
+                return
+            }
+            childViewIds.forEach { id ->
+                this.findViewById<View>(id).setOnClickListener { view ->
                     it.invoke(status, view)
                 }
             }
@@ -240,16 +285,15 @@ internal interface IStatusView {
     }
 
 
-
     /**
      * 改变当前视图状态
      */
     private fun changeViewStatus(newStatus: Int) {
-        if (curViewStatus == newStatus) {
+        if (currentStatus == newStatus) {
             return
         }
-        viewStatusListener?.invoke(curViewStatus, newStatus)
-        curViewStatus = newStatus
+        viewStatusListener?.invoke(currentStatus, newStatus)
+        currentStatus = newStatus
     }
 
     fun clear() {
@@ -259,6 +303,7 @@ internal interface IStatusView {
         viewStatusListener = null
         clickListener = null
     }
+
 }
 
 
