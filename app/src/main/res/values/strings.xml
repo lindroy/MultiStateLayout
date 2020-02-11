@@ -3,4 +3,5 @@
     <string name="title_global_setting">基本使用-全局设置</string>
     <string name="title_custom_setting">基本使用-局部设置</string>
     <string name="title_activity_linear_status">LinearStatusActivity</string>
+    <string name="title_activity_constraint_status">ConstraintStatusActivity</string>
 </resources>

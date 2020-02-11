@@ -5,7 +5,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.lindroy.morestatusview.R
 import com.lindroy.morestatusview.constants.STATUS_CONTENT
 import com.lindroy.morestatusview.interfaces.IStatusView
@@ -13,10 +13,10 @@ import com.lindroy.morestatusview.util.inflateView
 
 /**
  * @author Lin
- * @date 2020/2/6
+ * @date 2020/2/9
  * @function
  */
-class LinearStatusView : LinearLayoutCompat, IStatusView {
+class ConstraintStatusView:ConstraintLayout , IStatusView {
 
     override var curViewStatus: Int = STATUS_CONTENT
     override var viewStatusListener: ((oldStatus: Int, newStatus: Int) -> Unit)? = null
@@ -46,6 +46,7 @@ class LinearStatusView : LinearLayoutCompat, IStatusView {
     }
 
     override fun showContent() = showContentView()
+
 
     override fun showLoading(view: View? , layoutParams: ViewGroup.LayoutParams) =
         showLoadingView(view, layoutParams)
@@ -81,3 +82,16 @@ class LinearStatusView : LinearLayoutCompat, IStatusView {
         clear()
     }
 }
+
+class cc :ConstraintLayout{
+    constructor(context: Context,
+                attrs: AttributeSet?,
+                defStyleAttr: Int
+    ) : super(context, attrs, defStyleAttr) {
+        context.obtainStyledAttributes(attrs, R.styleable.MoreStatusView, defStyleAttr, 0).apply {
+            recycle()
+        }
+    }
+}
+
+

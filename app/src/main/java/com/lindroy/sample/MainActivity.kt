@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
         btnLinear.setOnClickListener {
             startActivity(LinearStatusActivity::class.java)
         }
+        btnConstrain.setOnClickListener {
+            startActivity(ConstraintStatusActivity::class.java)
+        }
     }
 
     private fun startActivity(cls: Class<*>?){
