@@ -219,7 +219,7 @@ internal interface IStatusView {
             checkLayoutId(layoutId)
             if (status !in viewTags) {
                 val statusView = context.inflateView(layoutId).apply { tag = status }
-                addView(statusView)
+                addView(statusView,0,defaultLayoutParams)
                 viewTags.add(status)
                 setOnViewClickListener(status, statusView, clickViewIds)
             }
