@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ConstraintStatusActivity"></activity>
+        <activity android:name=".ConstraintStatusActivity"
+            android:label="@string/title_activity_constraint_status"
+            ></activity>
         <activity
             android:name=".LinearStatusActivity"
             android:label="@string/title_activity_linear_status" />

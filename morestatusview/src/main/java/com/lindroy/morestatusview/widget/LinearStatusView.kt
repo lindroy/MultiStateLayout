@@ -14,7 +14,7 @@ import com.lindroy.morestatusview.util.inflateView
 /**
  * @author Lin
  * @date 2020/2/6
- * @function
+ * @function 可以显示多状态布局的LinearLayout
  */
 class LinearStatusView : LinearLayoutCompat, IStatusView {
 
@@ -49,6 +49,9 @@ class LinearStatusView : LinearLayoutCompat, IStatusView {
 
     override fun showLoading(view: View? , layoutParams: ViewGroup.LayoutParams) =
         showLoadingView(view, layoutParams)
+
+    override fun showLoading(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
+        showLoadingView(context.inflateView(layoutId),layoutParams)
 
     override fun showEmpty(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
         showEmptyView(context.inflateView(layoutId),layoutParams)

@@ -52,6 +52,10 @@ internal interface IStatusView {
      * 显示加载中视图
      */
     fun showLoading(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    /**
+     * 显示加载中视图
+     */
+    fun showLoading(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
 
     /**
      * 显示空视图布局
@@ -103,9 +107,7 @@ internal interface IStatusView {
     }
     //endregion
 
-    fun ViewGroup.showLoadingView(view: View? = null,
-                                  layoutParams: ViewGroup.LayoutParams = defaultLayoutParams
-    ) {
+    fun ViewGroup.showLoadingView(view: View? , layoutParams: ViewGroup.LayoutParams) {
         if (loadingView == null) {
             loadingView = if (view == null) {
                 checkLayoutId(loadingInfo.layoutId)

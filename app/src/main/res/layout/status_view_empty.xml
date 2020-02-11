@@ -4,16 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <TextView
+    <ImageView
+        android:id="@+id/imageView"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_empty"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.25"
+        android:layout_width="0dp"
+        app:layout_constraintDimensionRatio="170:128"
+        app:layout_constraintVertical_bias="0.4"
+        android:layout_height="0dp"/>
+
+
+    <TextView
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="没有数据哦"
-        android:textSize="24sp"
+       style="@style/HintTextStyle"
+        android:text="暂无数据"
        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

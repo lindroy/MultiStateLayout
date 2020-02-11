@@ -14,7 +14,7 @@ import com.lindroy.morestatusview.util.inflateView
 /**
  * @author Lin
  * @date 2020/2/9
- * @function
+ * @function 可以显示多状态布局的ConstraintLayout
  */
 class ConstraintStatusView:ConstraintLayout , IStatusView {
 
@@ -47,9 +47,11 @@ class ConstraintStatusView:ConstraintLayout , IStatusView {
 
     override fun showContent() = showContentView()
 
-
     override fun showLoading(view: View? , layoutParams: ViewGroup.LayoutParams) =
         showLoadingView(view, layoutParams)
+
+    override fun showLoading(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
+        showLoadingView(context.inflateView(layoutId),layoutParams)
 
     override fun showEmpty(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
         showEmptyView(context.inflateView(layoutId),layoutParams)
@@ -82,16 +84,3 @@ class ConstraintStatusView:ConstraintLayout , IStatusView {
         clear()
     }
 }
-
-class cc :ConstraintLayout{
-    constructor(context: Context,
-                attrs: AttributeSet?,
-                defStyleAttr: Int
-    ) : super(context, attrs, defStyleAttr) {
-        context.obtainStyledAttributes(attrs, R.styleable.MoreStatusView, defStyleAttr, 0).apply {
-            recycle()
-        }
-    }
-}
-
-

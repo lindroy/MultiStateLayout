@@ -9,5 +9,5 @@ import android.view.View
  * @date 2020/2/9
  * @function
  */
-fun Context.inflateView(layoutId: Int): View =
+internal fun Context.inflateView(layoutId: Int): View =
     LayoutInflater.from(this).inflate(layoutId, null)

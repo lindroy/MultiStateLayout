@@ -5,16 +5,28 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <Button
-        android:id="@+id/btnLogin"
+    <ImageView
+        android:id="@+id/imageView"
+        android:scaleType="fitXY"
+        android:src="@drawable/img_need_login"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        app:layout_constraintWidth_percent="0.2"
+        android:layout_width="0dp"
+        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintDimensionRatio="1:1"
+        android:layout_height="0dp"/>
+
+    <Button
+        android:layout_marginTop="8dp"
+        style="@style/ButtonStyle"
+        android:id="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:text="点击登录"
-        android:textSize="14sp"
        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
