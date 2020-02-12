@@ -92,7 +92,7 @@ internal interface IStatusView {
     fun showError(
         @LayoutRes layoutId: Int,
         @IdRes vararg clickViewIds: Int
-    ) = showError(layoutId,defaultLayoutParams,*clickViewIds)
+    ) = showError(layoutId, defaultLayoutParams, *clickViewIds)
 
     /**
      * 显示断网视图
@@ -117,7 +117,7 @@ internal interface IStatusView {
     fun showNoNetwork(
         @LayoutRes layoutId: Int,
         vararg clickViewIds: Int
-    )= showNoNetwork(layoutId,defaultLayoutParams,*clickViewIds)
+    ) = showNoNetwork(layoutId, defaultLayoutParams, *clickViewIds)
 
     /**
      * 显示状态视图
