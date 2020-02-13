@@ -11,7 +11,7 @@
 
     <ImageView
         app:layout_constraintWidth_percent="0.6"
-        android:id="@+id/imageView"
+        android:id="@+id/ivEmpty"
         app:layout_constraintVertical_bias="0.4"
         android:scaleType="centerCrop"
         android:src="@drawable/cat"
@@ -28,7 +28,7 @@
         android:textSize="16sp"
         android:layout_marginTop="8dp"
         android:text="可爱的小奶猫"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/ivEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

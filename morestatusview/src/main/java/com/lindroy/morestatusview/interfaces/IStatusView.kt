@@ -62,12 +62,20 @@ internal interface IStatusView {
     /**
      * 显示空视图布局
      */
-    fun showEmpty(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showEmpty(
+        view: View? = null,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes vararg clickViewIds: Int
+    )
 
     /**
      * 显示空视图布局
      */
-    fun showEmpty(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showEmpty(
+        @LayoutRes layoutId: Int,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes vararg clickViewIds: Int
+    )
 
     /**
      * 显示错误视图
@@ -162,7 +170,8 @@ internal interface IStatusView {
 
     fun ViewGroup.showEmptyView(
         view: View? = null,
-        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        vararg clickViewIds: Int
     ) {
         if (emptyView == null) {
             emptyView = if (view == null) {
@@ -180,6 +189,10 @@ internal interface IStatusView {
                 addView(loadingView, 0, layoutParams)
             }
         }
+        emptyView!!.setOnChildViewClickListener(
+            STATUS_EMPTY,
+            if (view == null) emptyInfo.clickViewIds else clickViewIds.toList()
+        )
         showViewByStatus(STATUS_EMPTY)
     }
 

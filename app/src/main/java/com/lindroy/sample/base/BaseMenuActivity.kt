@@ -36,6 +36,7 @@ abstract class BaseMenuActivity : AppCompatActivity() {
                 }, 2000)
             }
             R.id.btnLogin -> Toast.makeText(this, "点击登录", Toast.LENGTH_LONG).show()
+            R.id.ivEmpty-> Toast.makeText(this, "没有数据啦", Toast.LENGTH_LONG).show()
         }
     }
 
