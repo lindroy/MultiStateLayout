@@ -6,6 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ProgressBar
+        android:id="@+id/progressBar"
+        app:layout_constraintVertical_bias="0.4"
         android:indeterminateTint="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -14,5 +16,13 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
        />
+
+    <TextView
+        android:text="正在加载……"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        android:id="@+id/tvLoading"
+        style="@style/HintTextStyle"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

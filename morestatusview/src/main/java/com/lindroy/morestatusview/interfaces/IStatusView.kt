@@ -3,6 +3,7 @@ package com.lindroy.morestatusview.interfaces
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.children
@@ -43,6 +44,31 @@ internal interface IStatusView {
     val noNetworkInfo
         get() = MoreStatusView.instance.noNetworkInfo
 
+    /**
+     * 当前是否是内容视图布局
+     */
+    val isContent
+        get() = currentStatus == STATUS_CONTENT
+
+    /**
+     * 当前是否是空视图布局
+     */
+    val isEmpty: Boolean
+        get() = currentStatus == STATUS_EMPTY
+
+    /**
+     * 当前是否是错误视图布局
+     */
+    val isError: Boolean
+        get() = currentStatus == STATUS_ERROR
+
+    /**
+     * 当前是否是断网视图
+     */
+    val isNoNetwork: Boolean
+        get() = currentStatus == STATUS_NO_NETWORK
+
+
     //region 子类对外提供的方法
     /**
      * 显示内容布局
@@ -52,12 +78,22 @@ internal interface IStatusView {
     /**
      * 显示加载中视图
      */
-    fun showLoading(view: View? = null, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showLoading(
+        view: View? = null,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes hintTextId: Int = NULL_RESOURCE_ID,
+        hintText: String = loadingInfo.hintText
+    )
 
     /**
      * 显示加载中视图
      */
-    fun showLoading(@LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams)
+    fun showLoading(
+        @LayoutRes layoutId: Int,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes hintTextId: Int = NULL_RESOURCE_ID,
+        hintText: String = loadingInfo.hintText
+    )
 
     /**
      * 显示空视图布局
@@ -90,7 +126,8 @@ internal interface IStatusView {
      * 显示错误视图
      */
     fun showError(
-        @LayoutRes layoutId: Int, layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @LayoutRes layoutId: Int,
+        layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
         @IdRes vararg clickViewIds: Int
     )
 
@@ -134,8 +171,10 @@ internal interface IStatusView {
 
     /**
      * 视图改变监听事件
+     * formerStatus：之前的状态
+     * curStatus：当前状态
      */
-    fun setOnViewStatusChangeListener(listener: (oldStatus: Int, newStatus: Int) -> Unit) {
+    fun setOnViewStatusChangeListener(listener: (formerStatus: Int, curStatus: Int) -> Unit) {
         viewStatusListener = listener
     }
 
@@ -147,7 +186,12 @@ internal interface IStatusView {
     }
     //endregion
 
-    fun ViewGroup.showLoadingView(view: View?, layoutParams: ViewGroup.LayoutParams) {
+    fun ViewGroup.showLoadingView(
+        view: View?,
+        layoutParams: ViewGroup.LayoutParams,
+        @IdRes hintTextId: Int = loadingInfo.hintId,
+        hintText: String = ""
+    ) {
         if (loadingView == null) {
             loadingView = if (view == null) {
                 checkLayoutId(loadingInfo.layoutId)
@@ -163,6 +207,9 @@ internal interface IStatusView {
                 loadingView!!.tag = STATUS_LOADING
                 addView(loadingView, 0, layoutParams)
             }
+        }
+        if (hintTextId.isLegalResId) {
+            loadingView!!.findViewById<TextView>(hintTextId).text = hintText
         }
         showViewByStatus(STATUS_LOADING)
     }
@@ -298,6 +345,14 @@ internal interface IStatusView {
     }
 
 
+    fun clear() {
+        if (viewTags.isNotEmpty()) {
+            viewTags.clear()
+        }
+        viewStatusListener = null
+        clickListener = null
+    }
+
     /**
      * 改变当前视图状态
      */
@@ -309,13 +364,8 @@ internal interface IStatusView {
         currentStatus = newStatus
     }
 
-    fun clear() {
-        if (viewTags.isNotEmpty()) {
-            viewTags.clear()
-        }
-        viewStatusListener = null
-        clickListener = null
-    }
+    private val Int.isLegalResId
+        get() = this != NULL_RESOURCE_ID
 
 }
 

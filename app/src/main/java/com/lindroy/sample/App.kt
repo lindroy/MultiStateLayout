@@ -27,7 +27,7 @@ class App:Application() {
             .setEmptyView(R.layout.status_view_empty,R.id.ivEmpty)
             .setErrorView(R.layout.status_view_error,R.id.btnError)
             .setNoNetworkView(R.layout.status_view_no_network,R.id.btnNoNetwork)
-            .setStatusView(STATUS_NEED_LOGIN,R.layout.status_view_need_login,R.id.btnLogin) //自定义状态视图1：需要登录视图
-            .setStatusView(STATUS_NO_COUPON,R.layout.status_view_no_coupon) //自定义状态视图2：没有优惠券视图
+            .addStatusView(STATUS_NEED_LOGIN,R.layout.status_view_need_login,R.id.btnLogin) //自定义状态视图1：需要登录视图
+            .addStatusView(STATUS_NO_COUPON,R.layout.status_view_no_coupon) //自定义状态视图2：没有优惠券视图
     }
 }

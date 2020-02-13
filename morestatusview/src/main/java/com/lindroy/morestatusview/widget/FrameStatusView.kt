@@ -52,17 +52,22 @@ class FrameStatusView : FrameLayout, IStatusView {
 
     override fun showContent() = showContentView()
 
-    override fun showLoading(view: View?, layoutParams: ViewGroup.LayoutParams) =
-        showLoadingView(view, layoutParams)
+    override fun showLoading(
+        view: View?,
+        layoutParams: ViewGroup.LayoutParams, @IdRes hintTextId: Int,
+        hintText: String
+    ) = showLoadingView(view, layoutParams, hintTextId, hintText)
 
-    override fun showLoading(layoutId: Int, layoutParams: ViewGroup.LayoutParams) =
-        showLoadingView(context.inflateView(layoutId), layoutParams)
+    override fun showLoading(
+        layoutId: Int,
+        layoutParams: ViewGroup.LayoutParams, @IdRes hintTextId: Int,
+        hintText: String
+    ) = showLoadingView(context.inflateView(layoutId), layoutParams, hintTextId, hintText)
 
     override fun showEmpty(
         layoutId: Int,
         layoutParams: ViewGroup.LayoutParams, @IdRes vararg clickViewIds: Int
-    ) =
-        showEmptyView(context.inflateView(layoutId), layoutParams, *clickViewIds)
+    ) = showEmptyView(context.inflateView(layoutId), layoutParams, *clickViewIds)
 
     override fun showEmpty(
         view: View?,

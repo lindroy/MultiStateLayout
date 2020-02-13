@@ -23,7 +23,7 @@ class FrameStatusActivity2 : BaseFrameStatusActivity() {
     override fun onMenuItemClickListener(id: Int) {
         when (id) {
             MENU_CONTENT -> statusView.showContent()
-            MENU_LOADING -> statusView.showLoading(R.layout.status_view_loading2)
+            MENU_LOADING -> statusView.showLoading(R.layout.status_view_loading2,hintTextId = R.id.tvLoading,hintText = "玩命加载中……")
             MENU_EMPTY -> statusView.showEmpty(R.layout.status_view_empty2)
             MENU_ERROR -> statusView.showError(R.layout.status_view_error2,R.id.btnError)
             MENU_NO_NETWORK -> statusView.showNoNetwork()

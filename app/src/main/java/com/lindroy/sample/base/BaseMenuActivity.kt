@@ -14,7 +14,6 @@ import com.lindroy.sample.constants.*
 /**
  * @author Lin
  * @date 2020/2/9
- *
  * @function
  */
 abstract class BaseMenuActivity : AppCompatActivity() {
@@ -40,8 +39,8 @@ abstract class BaseMenuActivity : AppCompatActivity() {
         }
     }
 
-    protected val statusChangeListener: (oldStatus: Int, newStatus: Int) -> Unit = { oldStatus, newStatus ->
-        Log.d(com.lindroy.sample.TAG, "oldStatus=$oldStatus,newStatus=$newStatus")
+    protected val statusChangeListener: (oldStatus: Int, curStatus: Int) -> Unit = { oldStatus, curStatus ->
+        Log.d(com.lindroy.sample.TAG, "oldStatus=$oldStatus,newStatus=$curStatus")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
