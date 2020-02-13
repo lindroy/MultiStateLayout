@@ -3,6 +3,7 @@ package com.lindroy.morestatusview.util
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import com.lindroy.morestatusview.interfaces.IStatusView
 
 /**
  * @author Lin
@@ -11,4 +12,7 @@ import android.view.View
  */
 internal fun Context.inflateView(layoutId: Int): View =
     LayoutInflater.from(this).inflate(layoutId, null)
+
+
+
 

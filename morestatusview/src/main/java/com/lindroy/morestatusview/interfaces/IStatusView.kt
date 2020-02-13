@@ -81,8 +81,8 @@ internal interface IStatusView {
     fun showLoading(
         view: View? = null,
         layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
-        @IdRes hintTextId: Int = NULL_RESOURCE_ID,
-        hintText: String = loadingInfo.hintText
+        @IdRes hintTextId: Int = loadingInfo.hintId,
+        hintText: String? = loadingInfo.hintText
     )
 
     /**
@@ -92,8 +92,14 @@ internal interface IStatusView {
         @LayoutRes layoutId: Int,
         layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
-        hintText: String = loadingInfo.hintText
+        hintText: String? = loadingInfo.hintText
     )
+
+    /**
+     * @see showLoading
+     */
+    fun showLoading(hintText: String) =
+        showLoading(loadingInfo.layoutId, defaultLayoutParams, loadingInfo.hintId, hintText)
 
     /**
      * 显示空视图布局
@@ -101,6 +107,8 @@ internal interface IStatusView {
     fun showEmpty(
         view: View? = null,
         layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes hintTextId: Int = emptyInfo.hintId,
+        hintText: String? = emptyInfo.hintText,
         @IdRes vararg clickViewIds: Int
     )
 
@@ -110,8 +118,16 @@ internal interface IStatusView {
     fun showEmpty(
         @LayoutRes layoutId: Int,
         layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes hintTextId: Int = emptyInfo.hintId,
+        hintText: String? = emptyInfo.hintText,
         @IdRes vararg clickViewIds: Int
     )
+
+    /**
+     * @see showEmpty
+     */
+    fun showEmpty(hintText: String) =
+        showEmpty(emptyInfo.layoutId,defaultLayoutParams,emptyInfo.hintId,emptyInfo.hintText)
 
     /**
      * 显示错误视图
@@ -190,7 +206,7 @@ internal interface IStatusView {
         view: View?,
         layoutParams: ViewGroup.LayoutParams,
         @IdRes hintTextId: Int = loadingInfo.hintId,
-        hintText: String = ""
+        hintText: String? = null
     ) {
         if (loadingView == null) {
             loadingView = if (view == null) {
@@ -208,7 +224,7 @@ internal interface IStatusView {
                 addView(loadingView, 0, layoutParams)
             }
         }
-        if (hintTextId.isLegalResId) {
+        if (hintTextId.isLegalResId && hintText != null) {
             loadingView!!.findViewById<TextView>(hintTextId).text = hintText
         }
         showViewByStatus(STATUS_LOADING)
@@ -218,6 +234,8 @@ internal interface IStatusView {
     fun ViewGroup.showEmptyView(
         view: View? = null,
         layoutParams: ViewGroup.LayoutParams = defaultLayoutParams,
+        @IdRes hintTextId: Int = emptyInfo.hintId,
+        hintText: String? = null,
         vararg clickViewIds: Int
     ) {
         if (emptyView == null) {
@@ -233,13 +251,18 @@ internal interface IStatusView {
                 removeView(loadingView)
                 emptyView = view
                 emptyView!!.tag = STATUS_EMPTY
-                addView(loadingView, 0, layoutParams)
+                addView(emptyView, 0, layoutParams)
             }
         }
+        //设置点击事件
         emptyView!!.setOnChildViewClickListener(
             STATUS_EMPTY,
             if (view == null) emptyInfo.clickViewIds else clickViewIds.toList()
         )
+        //设置提示文字
+        if (hintTextId.isLegalResId && hintText != null) {
+            emptyView!!.findViewById<TextView>(hintTextId).text = hintText
+        }
         showViewByStatus(STATUS_EMPTY)
     }
 
@@ -352,6 +375,7 @@ internal interface IStatusView {
         viewStatusListener = null
         clickListener = null
     }
+
 
     /**
      * 改变当前视图状态

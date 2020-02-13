@@ -19,5 +19,6 @@ public class JavaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
         FrameStatusView statusView = findViewById(R.id.statusView);
+
     }
 }

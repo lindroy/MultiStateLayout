@@ -27,16 +27,10 @@ class FrameStatusView : FrameLayout, IStatusView {
     override var errorView: View? = null
     override var noNetworkView: View? = null
 
-    constructor(context: Context) : this(context, null)
-
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
     @SuppressLint("CustomViewStyleable")
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
+    @JvmOverloads
+    constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
         context.obtainStyledAttributes(attrs, R.styleable.MoreStatusView, defStyleAttr, 0).apply {
             emptyInfo.layoutId =
                 getResourceId(R.styleable.MoreStatusView_msv_emptyView, emptyInfo.layoutId)
@@ -54,32 +48,38 @@ class FrameStatusView : FrameLayout, IStatusView {
 
     override fun showLoading(
         view: View?,
-        layoutParams: ViewGroup.LayoutParams, @IdRes hintTextId: Int,
-        hintText: String
+        layoutParams: ViewGroup.LayoutParams,
+        @IdRes hintTextId: Int,
+        hintText: String?
     ) = showLoadingView(view, layoutParams, hintTextId, hintText)
 
     override fun showLoading(
         layoutId: Int,
-        layoutParams: ViewGroup.LayoutParams, @IdRes hintTextId: Int,
-        hintText: String
+        layoutParams: ViewGroup.LayoutParams,
+        @IdRes hintTextId: Int,
+        hintText: String?
     ) = showLoadingView(context.inflateView(layoutId), layoutParams, hintTextId, hintText)
 
     override fun showEmpty(
         layoutId: Int,
-        layoutParams: ViewGroup.LayoutParams, @IdRes vararg clickViewIds: Int
-    ) = showEmptyView(context.inflateView(layoutId), layoutParams, *clickViewIds)
+        layoutParams: ViewGroup.LayoutParams,
+        @IdRes hintTextId: Int,
+        hintText: String?,
+        @IdRes vararg clickViewIds: Int
+    ) = showEmptyView(context.inflateView(layoutId), layoutParams,hintTextId,hintText, *clickViewIds)
 
     override fun showEmpty(
         view: View?,
-        layoutParams: ViewGroup.LayoutParams, @IdRes vararg clickViewIds: Int
-    ) =
-        showEmptyView(view, layoutParams, *clickViewIds)
+        layoutParams: ViewGroup.LayoutParams,
+        @IdRes hintTextId: Int,
+        hintText: String?,
+        @IdRes vararg clickViewIds: Int
+    ) = showEmptyView(view, layoutParams,hintTextId,hintText, *clickViewIds)
 
     override fun showError(
         view: View?,
         layoutParams: ViewGroup.LayoutParams, @IdRes vararg clickViewIds: Int
-    ) =
-        showErrorView(view, layoutParams, *clickViewIds)
+    ) = showErrorView(view, layoutParams, *clickViewIds)
 
     override fun showError(
         layoutId: Int,

@@ -44,27 +44,27 @@ class MoreStatusView internal constructor() {
     fun setLoadingView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
-        hintText: String = ""
+        hintText: String? = null
     ) = addStatusViewToList(STATUS_LOADING, layoutId, hintTextId, hintText)
 
     fun setEmptyView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
-        hintText: String = "",
+        hintText: String? =null,
         @IdRes vararg clickViewIds: Int
     ) = addStatusViewToList(STATUS_EMPTY, layoutId, hintTextId, hintText, *clickViewIds)
 
     fun setErrorView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
-        hintText: String = "",
+        hintText: String? = null,
         @IdRes vararg clickViewIds: Int
     ) = addStatusViewToList(STATUS_ERROR, layoutId, hintTextId, hintText, *clickViewIds)
 
     fun setNoNetworkView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
-        hintText: String = "",
+        hintText: String? = null,
         @IdRes vararg clickViewIds: Int
     ) = addStatusViewToList(STATUS_NO_NETWORK, layoutId, hintTextId, hintText, *clickViewIds)
 
@@ -78,7 +78,7 @@ class MoreStatusView internal constructor() {
         status: Int,
         @LayoutRes layoutId: Int,
         @IdRes hintId: Int = NULL_RESOURCE_ID,
-        hintText: String = "",
+        hintText: String? =null,
         @IdRes vararg clickViewIds: Int
     ) =
         this.apply {

@@ -24,7 +24,7 @@ class App:Application() {
         super.onCreate()
         MoreStatusView.init()
             .setLoadingView(R.layout.status_view_loading)
-            .setEmptyView(R.layout.status_view_empty,R.id.ivEmpty)
+            .setEmptyView(R.layout.status_view_empty,R.id.tvEmpty)
             .setErrorView(R.layout.status_view_error,R.id.btnError)
             .setNoNetworkView(R.layout.status_view_no_network,R.id.btnNoNetwork)
             .addStatusView(STATUS_NEED_LOGIN,R.layout.status_view_need_login,R.id.btnLogin) //自定义状态视图1：需要登录视图

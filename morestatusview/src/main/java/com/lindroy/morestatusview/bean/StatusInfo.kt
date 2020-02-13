@@ -13,6 +13,6 @@ data class StatusInfo(
     val status: Int = -1,   //视图状态
     @LayoutRes var layoutId: Int = NULL_RESOURCE_ID,   //视图布局Id
     @IdRes var hintId: Int = NULL_RESOURCE_ID,
-    var hintText: String = "",
+    var hintText: String? = null,
     val clickViewIds: List<Int> = listOf()  //设置点击事件的控件Id
 )
