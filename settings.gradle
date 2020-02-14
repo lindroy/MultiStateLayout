@@ -1,2 +1,2 @@
-include ':app', ':morestatusview'
-rootProject.name='MoreStatusView'
+include ':app', ':multistatelayout'
+rootProject.name='MultiStateLayout'

@@ -14,8 +14,8 @@ abstract class BaseFrameStatusActivity: BaseMenuActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
-        statusView.setOnViewsClickListener(statusViewClickListener)
-        statusView.setOnViewStatusChangeListener(statusChangeListener)
+        stateView.setOnViewsClickListener(stateViewClickListener)
+        stateView.setOnViewStateChangeListener(statusChangeListener)
     }
 
 }

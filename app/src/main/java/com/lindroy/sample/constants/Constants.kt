@@ -6,9 +6,9 @@ package com.lindroy.sample.constants
  * @function
  */
 
-const val STATUS_NEED_LOGIN = 100
+const val STATE_NEED_LOGIN = 100
 
-const val STATUS_NO_COUPON = 200
+const val STATE_NO_COUPON = 200
 
 const val MENU_CONTENT = 100
 const val MENU_LOADING = 200

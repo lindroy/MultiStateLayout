@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lindroy.morestatusview.widget.LinearStatusView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.lindroy.multistatelayout.widget.LinearStateLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/linearStatusView"
-    tools:context=".LinearStatusActivity">
+    android:id="@+id/linearStateView"
+    tools:context=".LinearStateActivity">
 
     <TextView
-        android:text="条目一"
+        android:text="红楼梦"
         style="@style/ItemTextStyle"/>
     <TextView
-        android:text="条目二"
+        android:text="水浒传"
         style="@style/ItemTextStyle"/>
     <TextView
-        android:text="条目三"
+        android:text="西游记"
         style="@style/ItemTextStyle"/>
-</com.lindroy.morestatusview.widget.LinearStatusView>
+    <TextView
+        android:text="三国演义"
+        style="@style/ItemTextStyle"/>
+</com.lindroy.multistatelayout.widget.LinearStateLayout>

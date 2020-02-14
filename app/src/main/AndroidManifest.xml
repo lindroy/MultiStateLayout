@@ -12,19 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ConstraintStatusActivity"
-            android:label="@string/title_activity_constraint_status"
+        <activity android:name=".ConstraintStateActivity"
+            android:label="@string/title_activity_constraint_state"
             ></activity>
         <activity
-            android:name=".LinearStatusActivity"
-            android:label="@string/title_activity_linear_status" />
+            android:name=".LinearStateActivity"
+            android:label="@string/title_activity_linear_state" />
         <activity
-            android:name=".FrameStatusActivity2"
+            android:name=".FrameStateActivity2"
             android:label="@string/title_custom_setting" />
 
 
         <activity
-            android:name=".FrameStatusActivity"
+            android:name=".FrameStateActivity"
             android:label="@string/title_global_setting" />
         <activity android:name=".MainActivity">
             <intent-filter>

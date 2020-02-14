@@ -26,7 +26,7 @@ abstract class BaseMenuActivity : AppCompatActivity() {
         }
     }
 
-    protected val statusViewClickListener: (status: Int, view: View) -> Unit = { status, view ->
+    protected val stateViewClickListener: (state: Int, view: View) -> Unit = { state, view ->
         when (view.id) {
             R.id.btnError, R.id.btnNoNetwork -> {
                 showLoading()

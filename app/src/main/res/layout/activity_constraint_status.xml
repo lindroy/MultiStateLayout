@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lindroy.morestatusview.widget.ConstraintStatusView
+<com.lindroy.multistatelayout.widget.ConstraintStateLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/statusView"
-    tools:context=".ConstraintStatusActivity">
+    android:id="@+id/stateView"
+    tools:context=".ConstraintStateActivity">
 
 
     <ImageView
@@ -33,4 +33,4 @@
         android:layout_height="wrap_content"/>
 
 
-</com.lindroy.morestatusview.widget.ConstraintStatusView>
+</com.lindroy.multistatelayout.widget.ConstraintStateLayout>

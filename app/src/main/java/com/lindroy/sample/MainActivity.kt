@@ -14,16 +14,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         btnGlobalSetting.setOnClickListener {
-            startActivity(FrameStatusActivity::class.java)
+            startActivity(FrameStateActivity::class.java)
         }
         btnCustomSetting.setOnClickListener {
-            startActivity(FrameStatusActivity2::class.java)
+            startActivity(FrameStateActivity2::class.java)
         }
         btnLinear.setOnClickListener {
-            startActivity(LinearStatusActivity::class.java)
+            startActivity(LinearStateActivity::class.java)
         }
         btnConstrain.setOnClickListener {
-            startActivity(ConstraintStatusActivity::class.java)
+            startActivity(ConstraintStateActivity::class.java)
         }
     }
 
