@@ -31,6 +31,8 @@
 - [x] 空数据视图、网络断开视图和错误视图支持设置控件点击事件，可用于点击重连；
 - [x] 支持多种状态布局：`FrameStateLayout`、`LinearStateLayout`和`ConstraintLayout`等，可以根据需求选用，减少布局嵌套。
 
+效果图（Gif在GitHub中显示不出来，可以[点击这里](https://img-blog.csdnimg.cn/20200214232848754.gif)）
+
 ![效果图](E:\AndroidLib\MultiStateLayout\screenshot.gif)
 
 ## 使用方法
