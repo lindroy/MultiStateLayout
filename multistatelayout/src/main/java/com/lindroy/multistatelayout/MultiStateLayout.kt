@@ -47,6 +47,7 @@ class MultiStateLayout internal constructor() {
      * @param hintTextId:用于显示提示文字的控件Id
      * @param hintText:提示文字
      */
+    @JvmOverloads
     fun setLoadingView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
@@ -60,6 +61,7 @@ class MultiStateLayout internal constructor() {
      * @param hintText:提示文字
      * @param clickViewIds:需要设置点击事件的控件Id
      */
+    @JvmOverloads
     fun setEmptyView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
@@ -74,6 +76,7 @@ class MultiStateLayout internal constructor() {
      * @param hintText:提示文字
      * @param clickViewIds:需要设置点击事件的控件Id
      */
+    @JvmOverloads
     fun setErrorView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,
@@ -88,6 +91,7 @@ class MultiStateLayout internal constructor() {
      * @param hintText:提示文字
      * @param clickViewIds:需要设置点击事件的控件Id
      */
+    @JvmOverloads
     fun setNoNetworkView(
         @LayoutRes layoutId: Int,
         @IdRes hintTextId: Int = NULL_RESOURCE_ID,

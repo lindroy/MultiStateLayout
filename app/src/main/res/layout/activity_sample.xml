@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.lindroy.multistatelayout.widget.FrameStateLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<com.lindroy.multistatelayout.widget.FrameStateLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/stateView"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/stateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:msl_loadingView="@layout/state_view_loading"
+    app:msl_emptyView="@layout/state_view_empty"
+    app:msl_errorView="@layout/state_view_error"
+    app:msl_noNetworkView="@layout/state_view_no_network"
     tools:context=".FrameStateActivity">
 
     <TextView
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="我是内容视图"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-
+        android:textSize="20sp" />
 
 </com.lindroy.multistatelayout.widget.FrameStateLayout>

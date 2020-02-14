@@ -18,7 +18,7 @@ public class JavaActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample);
-        FrameStateLayout statusView = findViewById(R.id.stateView);
+        FrameStateLayout statusView = findViewById(R.id.stateLayout);
 
     }
 }

@@ -19,7 +19,6 @@ import com.lindroy.multistatelayout.util.inflateView
  */
 class ConstraintStateLayout : ConstraintLayout, IStateLayout {
 
-
     override var currentState: Int = STATE_CONTENT
     override val viewTags: ArrayList<Int> = arrayListOf()
     override var viewStateListener: ((formerState: Int, curState: Int) -> Unit)? = null

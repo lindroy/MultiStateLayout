@@ -15,29 +15,29 @@ class ConstraintStateActivity : BaseMenuActivity() {
 
 
     override fun showLoading() {
-        stateView.showLoading()
+        stateLayout.showLoading()
     }
 
     override fun showContent() {
-        stateView.showContent()
+        stateLayout.showContent()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_constraint_status)
-        stateView.setOnViewsClickListener(stateViewClickListener)
-        stateView.setOnViewStateChangeListener(statusChangeListener)
+        stateLayout.setOnViewsClickListener(stateViewClickListener)
+        stateLayout.setOnViewStateChangeListener(statusChangeListener)
     }
 
     override fun onMenuItemClickListener(id: Int) {
         when (id) {
-            MENU_CONTENT -> stateView.showContent()
-            MENU_EMPTY -> stateView.showEmpty()
-            MENU_LOADING -> stateView.showLoading()
-            MENU_ERROR -> stateView.showError()
-            MENU_NO_NETWORK -> stateView.showNoNetwork()
-            MENU_NEED_LOGIN ->stateView.showStateView(STATE_NEED_LOGIN)
-            MENU_NO_COUPON ->stateView.showStateView(STATE_NO_COUPON)
+            MENU_CONTENT -> stateLayout.showContent()
+            MENU_EMPTY -> stateLayout.showEmpty()
+            MENU_LOADING -> stateLayout.showLoading()
+            MENU_ERROR -> stateLayout.showError()
+            MENU_NO_NETWORK -> stateLayout.showNoNetwork()
+            MENU_NEED_LOGIN ->stateLayout.showStateView(STATE_NEED_LOGIN)
+            MENU_NO_COUPON ->stateLayout.showStateView(STATE_NO_COUPON)
         }
     }
 }

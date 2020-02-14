@@ -44,19 +44,25 @@ internal interface IStateLayout {
         get() = MultiStateLayout.instance.noNetworkInfo
 
     /**
-     * 当前是否是内容视图布局
+     * 当前是否是内容视图
      */
     val isContent
         get() = currentState == STATE_CONTENT
 
     /**
-     * 当前是否是空视图布局
+     * 当前是否是加载中视图
+     */
+    val isLoading
+        get() = currentState == STATE_LOADING
+
+    /**
+     * 当前是否是空数据视图
      */
     val isEmpty: Boolean
         get() = currentState == STATE_EMPTY
 
     /**
-     * 当前是否是错误视图布局
+     * 当前是否是错误视图
      */
     val isError: Boolean
         get() = currentState == STATE_ERROR
@@ -76,6 +82,10 @@ internal interface IStateLayout {
 
     /**
      * 显示加载中视图
+     * @param view:视图对象
+     * @param layoutParams:视图布局参数
+     * @param hintTextId:显示提示文字的控件Id
+     * @param hintText:提示文字
      */
     fun showLoading(
         view: View? = null,
@@ -100,6 +110,9 @@ internal interface IStateLayout {
     fun showLoading(hintText: String) =
         showLoading(loadingInfo.layoutId, defaultLayoutParams, loadingInfo.hintId, hintText)
 
+    /**
+     * @see showLoading
+     */
     fun showLoading() =
         showLoading(
             loadingInfo.layoutId,
@@ -110,6 +123,11 @@ internal interface IStateLayout {
 
     /**
      * 显示空视图布局
+     * @param view:视图对象
+     * @param layoutParams:视图布局参数
+     * @param hintTextId:显示提示文字的控件Id
+     * @param hintText:提示文字
+     * @param clickViewIds:需要设置点击事件的控件Id
      */
     fun showEmpty(
         view: View? = null,
@@ -144,6 +162,11 @@ internal interface IStateLayout {
 
     /**
      * 显示错误视图
+     * @param view:视图对象
+     * @param layoutParams:视图布局参数
+     * @param hintTextId:显示提示文字的控件Id
+     * @param hintText:提示文字
+     * @param clickViewIds:需要设置点击事件的控件Id
      */
     fun showError(
         view: View? = null,
@@ -193,6 +216,11 @@ internal interface IStateLayout {
 
     /**
      * 显示断网视图
+     * @param view:视图对象
+     * @param layoutParams:视图布局参数
+     * @param hintTextId:显示提示文字的控件Id
+     * @param hintText:提示文字
+     * @param clickViewIds:需要设置点击事件的控件Id
      */
     fun showNoNetwork(
         view: View? = null,
@@ -240,7 +268,7 @@ internal interface IStateLayout {
         )
 
     /**
-     * 显示状态视图
+     * 显示自定义状态视图
      */
     fun showStateView(state: Int)
 
