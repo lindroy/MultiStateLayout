@@ -268,6 +268,31 @@ internal interface IStateLayout {
         )
 
     /**
+     * 显示请求成功的视图
+     * @param isDataEmpty:页面数据是否为空，若为空，则显示空数据视图，否则显示内容视图
+     * @return true:显示内容视图；false:显示空数据视图
+     */
+    fun showSuccessView(isDataEmpty: Boolean) = when (isDataEmpty) {
+        true -> {
+            showEmpty()
+            false
+        }
+        false -> {
+            showContent()
+            true
+        }
+    }
+
+    /**
+     * 显示失败视图
+     * @param isNoNetwork:是否是断网状态
+     */
+    fun showFailedView(isNoNetwork:Boolean) = when(isNoNetwork){
+        true-> showNoNetwork()
+        false-> showError()
+    }
+
+    /**
      * 显示自定义状态视图
      */
     fun showStateView(state: Int)
