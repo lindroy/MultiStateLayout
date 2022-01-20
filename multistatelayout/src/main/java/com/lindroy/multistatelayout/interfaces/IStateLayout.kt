@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.children
+import androidx.core.view.isVisible
 import com.lindroy.multistatelayout.MultiStateLayout
 import com.lindroy.multistatelayout.constants.*
 import com.lindroy.multistatelayout.util.inflateView
@@ -287,9 +288,9 @@ internal interface IStateLayout {
      * 显示失败视图
      * @param isNoNetwork:是否是断网状态
      */
-    fun showFailedView(isNoNetwork:Boolean) = when(isNoNetwork){
-        true-> showNoNetwork()
-        false-> showError()
+    fun showFailedView(isNoNetwork: Boolean) = when (isNoNetwork) {
+        true -> showNoNetwork()
+        false -> showError()
     }
 
     /**
@@ -380,8 +381,7 @@ internal interface IStateLayout {
 
     fun ViewGroup.showContentView() {
         children.forEach {
-            it.visibility =
-                if (it.tag == STATE_CONTENT || it.tag !in viewTags) View.VISIBLE else View.GONE
+            it.isVisible = it.tag == STATE_CONTENT || it.tag !in viewTags
         }
         changeViewStatus(STATE_CONTENT)
     }
@@ -464,7 +464,7 @@ internal interface IStateLayout {
 
     private fun ViewGroup.showViewByState(status: Int) {
         children.forEach {
-            it.visibility = if (it.tag == status) View.VISIBLE else View.GONE
+            it.isVisible = it.tag == status
         }
     }
 
